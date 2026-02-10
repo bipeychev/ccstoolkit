@@ -1,9 +1,11 @@
-cff-version: 1.1.0
+cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
 - family-names: Peychev
   given-names: Boyan
-orcid: https://orcid.org/0000-0001-7411-7971
-title:bipeychev/ccstoolkit: Initial release
+  orcid: https://orcid.org/0000-0001-7411-7971
+title: Initial release
 version: v0.1.0
 date-released: 2026-02-10
+doi: https://doi.org/10.5281/zenodo.18588595
+url: "https://github.com/bipeychev/ccstoolkit"
