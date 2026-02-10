@@ -4,7 +4,7 @@ authors:
 - family-names: Peychev
   given-names: Boyan
   orcid: https://orcid.org/0000-0001-7411-7971
-title: Initial release
+title: ccstoolkit
 version: v0.1.0
 date-released: 2026-02-10
 doi: https://doi.org/10.5281/zenodo.18588595
