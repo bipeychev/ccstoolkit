@@ -63,6 +63,8 @@ $O\ \in\ [0.015\ \text{mM},\ 24\ \text{mM}]\ \approx\ [0.8\ \text{ppmx},\ 1300\ 
 
 $S\ \in\ [0.015\ \text{mM},\ 4\ \text{mM}]\ \approx\ [0.8\ \text{ppmx},\ 200\ \text{ppmx}]\ \text{in scCO}_2$
 
+<br />
+
 $H_2O\ \in\ [1\ \text{ppmx},\ 200\ \text{ppmx}]\ \text{in scCO}_2\ \approx\ [0.018\ \text{mM},\ 4\ \text{mM}]$
 
 $H_2S\ \in\ [1\ \text{ppmx},\ 100\ \text{ppmx}]\ \text{in scCO}_2\ \approx\ [0.018\ \text{mM},\ 2\ \text{mM}]$
@@ -72,6 +74,8 @@ $NO_2\ \in\ [1\ \text{ppmx},\ 200\ \text{ppmx}]\ \text{in scCO}_2\ \approx\ [0.0
 $O_2\ \in\ [1\ \text{ppmx},\ 200\ \text{ppmx}]\ \text{in scCO}_2\ \approx\ [0.018\ \text{mM},\ 4\ \text{mM}]$
 
 $SO_2\ \in\ [1\ \text{ppmx},\ 100\ \text{ppmx}]\ \text{in scCO}_2\ \approx\ [0.018\ \text{mM},\ 2\ \text{mM}]$
+
+<br />
 
 $CO_2\ \in\ [0.015\ \text{mM},\ 3000\ \text{mM}]$
 
