@@ -1,16 +1,13 @@
 # eqstreamcomp
----
 A small Python library for studying the equilibrium composition of scCO<sub>2</sub> streams.
 
 ## Citation 
----
 If you find this library useful in your research, please cite the following paper:
 
 Slavchov, R. I., Iqbal, M. H., Faraji, S., Madden, D., Sonke, J., & Clarke, S. M. (2024). Corrosion maps: Stability and composition diagrams for corrosion problems in CO2 transport. *Corrosion Science, 236*, 112204.
 [![Static Badge](https://img.shields.io/badge/doi-10.1016/j.corsci.2024.112204-5077AB?logo=doi&logoColor=white)](https://doi.org/10.1016/j.corsci.2024.112204)
 
 ## How to use the library
----
 ```
 #Import
 from ccstoolkit import eqstreamcomp
@@ -56,8 +53,8 @@ P = {
 
 print(eqstreamcomp.get_stability_map(P))
 ```
+
 ## Domain
----
 $H\ \in\ [0.015\ \text{mM},\ 12\ \text{mM}]\ \approx\ [0.8\ \text{ppmx},\ 650\ \text{ppmx}]\ \text{in scCO}_2$
 
 $N\ \in\ [0.015\ \text{mM},\ 4\ \text{mM}]\ \approx\ [0.8\ \text{ppmx},\ 200\ \text{ppmx}]\ \text{in scCO}_2$
@@ -81,11 +78,9 @@ $CO_2\ \in\ [0.015\ \text{mM},\ 3000\ \text{mM}]$
 $T\ \in\ [223.15\ \text{K},\ 373.15\ \text{K}]$
 
 ## Example plot
----
 <img src="../../assets/stream_stoichiometry_map_example.png" width="650"/> <img src="../../assets/stream_stability_map_example.png" width="650"/>
 
 ## License
----
 The software is licensed under the MIT license. You are free to copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the software. Please, refer to the [full text](../../LICENSE). 
 [![licence](https://img.shields.io/badge/license-MIT-5077AB)](../../LICENSE)
