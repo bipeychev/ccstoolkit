@@ -6,10 +6,11 @@
 import re
 import numpy as np
 
-from . import _math
-from . import _substances
+import ccstoolkit.common._math as _math
+import ccstoolkit.common._line_logic as _line_logic
+import ccstoolkit.common._substances as _substances_
 
-_substances = _substances.get_substances_TD_data()
+_substances = _substances_.get_substances_TD_data()
 
 R = 8.314                                                                                   #[J/K/mol]
 
@@ -20,15 +21,15 @@ R = 8.314                                                                       
 #'On the other hand, meta stable supersaturated mixtures are possible, 
 #so we plot the diagrams to an upper limit of lgH2O = 2.'
 _bounds = {
-    'x': (-20, 2),
-    'y': (-120, 2)
+    'x': (-20, 2),                                                                          #[-]
+    'y': (-120, 2)                                                                          #[-]
 }
 
 _domain = {
-    'S': {'min': 0.015, 'max': 3},
-    'N': {'min': 0.015, 'max': 3},
-    'C': {'min': 0.015, 'max':3e3},
-    'T': {'min': 258.15, 'max': 373.15}
+    'S': {'min': 0.015, 'max': 4},                                                          #[mM]; [mol/m^3]
+    'N': {'min': 0.015, 'max': 4},                                                          #[mM]; [mol/m^3]
+    'CO2': {'min': 0.015, 'max':3e3},                                                       #[mM]; [mol/m^3]
+    'T': {'min': 273.15-50, 'max': 273.15+100}                                              #[K]
 }
 
 #Specify the reactions
@@ -190,9 +191,9 @@ for key, reaction in _reactions.items():
         drcp += _substances[s]['cp']*c
         nur += c*(not _substances[s]['solid'])
         
-    reaction['drg'] = drg*1e3                               #[J/mol]
-    reaction['drh'] = drh*1e3                               #[J/mol]
-    reaction['drcp'] = drcp                                 #[J/mol/K]
+    reaction['drg'] = drg*1e3                                                                        #[J/mol]
+    reaction['drh'] = drh*1e3                                                                        #[J/mol]
+    reaction['drcp'] = drcp                                                                          #[J/mol/K]
     reaction['nur'] = nur
     
     #---------------------------Calculate the equilibrium constant of the reaction---------------------------
@@ -204,27 +205,27 @@ for key, reaction in _reactions.items():
     
     #---------------------------Equation in the from a+b*lgH2O+c*lgO2=0---------------------------
     ind = subs.index('O2') if 'O2' in subs else None
-    coeff_O2 = coeffs[ind] if ind else 0
+    coeff_O2 = coeffs[ind] if ind!=None else 0
 
     ind = subs.index('H2O') if 'H2O' in subs else None
-    coeff_H2O = coeffs[ind] if ind else 0
+    coeff_H2O = coeffs[ind] if ind!=None else 0
 
     ind = subs.index('CO2') if 'CO2' in subs else None
-    coeff_CO2 = coeffs[ind] if ind else 0
+    coeff_CO2 = coeffs[ind] if ind!=None else 0
     
     #Substances that will be approximated by Ntot
     inds = [subs.index(i) if i in subs else None for i in ['NO2','HNO3']]
     #There should be only one by equation...
-    coeff_Ntot = sum([coeffs[ind] if ind else 0 for ind in inds])
+    coeff_Ntot = sum([coeffs[ind] if ind!=None else 0 for ind in inds])
 
     #Substances that will be approximated by Stot
     inds = [subs.index(i) if i in subs else None for i in ['COS','H2S','SO2','SO3','H2SO4']]
     #There should be only one by equation...
-    coeff_Stot = sum([coeffs[ind] if ind else 0 for ind in inds])
+    coeff_Stot = sum([coeffs[ind] if ind!=None else 0 for ind in inds])
     
     #P = {'S': 1, 'N': 1, 'C': 2000, 'T': 298.15}   <---------   Important!!!
     #The intercept of the equations is a function of the composition.
-    intercept = lambda P, lgKp=_reactions[key]['lgK_p'], c_s=coeff_Stot, c_n=coeff_Ntot, c_c=coeff_CO2: -lgKp(P['T'])+c_s*np.log10(P['S'])+c_n*np.log10(P['N'])+c_c*np.log10(P['C'])
+    intercept = lambda P, lgKp=_reactions[key]['lgK_p'], c_s=coeff_Stot, c_n=coeff_Ntot, c_c=coeff_CO2: -lgKp(P['T'])+c_s*np.log10(P['S'])+c_n*np.log10(P['N'])+c_c*np.log10(P['CO2'])
     slope_x = coeff_H2O
     slope_y = coeff_O2
     
@@ -239,30 +240,11 @@ for key, reaction in _reactions.items():
     reaction['line']['vertical'] = coeff_O2 == 0
     reaction['line']['horizontal'] = coeff_H2O == 0 
     
-#Based on the specified rules, create a dictionary containing the lines specifying a graph
-def _form_lines(Rules,_reactions=_reactions):
-    Lines = dict()
-    for key,rules in Rules.items():
-        rules_f = list()
-        for rule in rules:
-            if rule[0]=='above':
-                rules_f.append(lambda x, y, P, key=rule[1]: y > _reactions[key]['line']['y'](x,P))
-            elif rule[0]=='below':
-                rules_f.append(lambda x, y, P, key=rule[1]: y < _reactions[key]['line']['y'](x,P))
-            elif rule[0]=='right of':
-                rules_f.append(lambda x, y, P, key=rule[1]: x > _reactions[key]['line']['x'](y,P))
-            elif rule[0]=='left of':
-                rules_f.append(lambda x, y, P, key=rule[1]: x < _reactions[key]['line']['x'](y,P))
-        
-        Lines[key] = _reactions[key]['line'] | {'rules': rules, 'rules_f': rules_f}
-        
-    return Lines
-    
 #Create the lines dicts
-_lines_Fe_O = _form_lines(_rules_Fe_O)
-_lines_Fe_C = _form_lines(_rules_Fe_C)
-_lines_Fe_N = _form_lines(_rules_Fe_N)
-_lines_Fe_S = _form_lines(_rules_Fe_S)
+_lines_Fe_O = _line_logic._form_lines(_rules_Fe_O,{key: item['line'] for key,item in _reactions.items()})
+_lines_Fe_C = _line_logic._form_lines(_rules_Fe_C,{key: item['line'] for key,item in _reactions.items()})
+_lines_Fe_N = _line_logic._form_lines(_rules_Fe_N,{key: item['line'] for key,item in _reactions.items()})
+_lines_Fe_S = _line_logic._form_lines(_rules_Fe_S,{key: item['line'] for key,item in _reactions.items()})
 
 #Add special rules
 def _special_rule_Fe2O3_FeOOH(x,y,P):

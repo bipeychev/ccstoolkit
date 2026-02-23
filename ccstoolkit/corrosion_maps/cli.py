@@ -38,7 +38,7 @@ _corr_products_colors = {
 #===================================================================================================================
 #---------------------------------------------------------------------------------------Methods
 #===================================================================================================================
-def print_output(output, output_file=None):
+def _print_output(output, output_file=None):
 	if output_file:
 		with open(output_file, "w") as f:
 			f.write(output)
@@ -46,7 +46,7 @@ def print_output(output, output_file=None):
 	else:
 		print(output)
 		
-def verify_domain(P):
+def _verify_domain(P):
 	domain = get_domain()
 		
 	if not domain['S']['min'] <= P['S'] <= domain['S']['max']:
@@ -67,7 +67,7 @@ def verify_domain(P):
 		
 	return True
 	
-def plot(maps, fname=None):
+def _plot(maps, fname=None):
 	Bounds = get_bounds()
 
 	fig, axs = plt.subplot_mosaic(
@@ -146,7 +146,7 @@ def main():
 		S, N, C, T = args.p
 		P = {'S': S, 'N': N, 'C': C, 'T': T}
 		
-		if verify_domain(P):
+		if _verify_domain(P):
 			maps = get_maps(P)
 	
 	#---------------------------------------------------------------------------------------Output
@@ -188,13 +188,14 @@ def main():
 	
 	#Print
 	if output:
-		print_output(output, args.o)
+		_print_output(output, args.o)
 	
 	#Print reaction list
 	if (args.plot or args.sp) and args.p:
-		plot(maps,args.sp)
+		_plot(maps,args.sp)
 	
 	return 0
+
 
 if __name__ == "__main__":
 	main()

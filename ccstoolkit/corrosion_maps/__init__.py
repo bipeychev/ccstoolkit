@@ -1,5 +1,5 @@
 #!/usr/bin/python3
 
-from .maps import get_maps
+from .stability_maps import get_stability_maps
 
-__all__ = ["get_regions"]
+__all__ = ["get_stability_maps"]
