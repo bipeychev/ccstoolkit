@@ -82,7 +82,7 @@ $CO_2\ \in\ [0.015\ \text{mM},\ 3000\ \text{mM}]$
 $T\ \in\ [223.15\ \text{K},\ 373.15\ \text{K}]$
 
 ## Example plot
-<img src="../../assets/stream_stoichiometry_map_example.png" width="650"/> <img src="../../assets/stream_stability_map_example.png" width="650"/>
+<img src="../../assets/stream_stoichiometry_map_example.png" width="500"/> <img src="../../assets/stream_stability_map_example.png" width="500"/>
 
 ## License
 The software is licensed under the MIT license. You are free to copy, modify, merge, publish, distribute, sublicense, and/or sell
