@@ -5,8 +5,8 @@
 #===================================================================================================================
 import numpy as np
 
-from . import _math
 from . import _reactions
+import ccstoolkit.common._math as _math
 
 _bounds = _reactions.get_bounds()
 _lines = _reactions.get_lines()

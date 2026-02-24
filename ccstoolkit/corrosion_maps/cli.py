@@ -13,7 +13,7 @@ from .maps import get_maps
 from ._reactions import get_domain
 from ._reactions import get_bounds
 from ._reactions import get_reactions
-from ._substances import get_substances_TD_data
+from ccstoolkit.common._substances import get_substances_TD_data
 
 #===================================================================================================================
 #---------------------------------------------------------------------------------------Constants
