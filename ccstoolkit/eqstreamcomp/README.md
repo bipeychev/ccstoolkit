@@ -80,6 +80,8 @@ $SO_2\ \in\ [1\ \text{ppmx},\ 100\ \text{ppmx}]\ \text{in scCO}_2\ \approx\ [0.0
 
 $CO_2\ \in\ [0.015\ \text{mM},\ 3000\ \text{mM}]$
 
+$tot\ \in\ [1e3\ \text{mM},\ \infty\ \text{mM}]$
+
 $T\ \in\ [223.15\ \text{K},\ 373.15\ \text{K}]$
 
 ## Example plot
