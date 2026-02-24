@@ -1,6 +1,12 @@
 # ccstoolkit
 A toolkit for studying the reactive phase behavior of scCO<sub>2</sub> streams and steel corrosion.
 
+## How to install
+
+```
+pip install git+https://github.com/bipeychev/ccstoolkit.git
+```
+
 ##  Modules
 - [**Equilibrium stream composition**](ccstoolkit/eqstreamcomp/)
 
