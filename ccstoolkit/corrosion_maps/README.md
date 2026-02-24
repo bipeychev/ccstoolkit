@@ -21,19 +21,19 @@ print(corrosion_maps.get_stability_maps(P))
 ## How to use the cli
 <ins>**Pr**</ins>int the map data
 
-`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3  298.15 -pr`
+`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3 298.15 -pr`
 
 Show the <ins>**pl**</ins>ot
 
-`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3  298.15 -pl`
+`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3 298.15 -pl`
 
 Save the <ins>**o**</ins>utput to file
 
-`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3  298.15 -o file_name`
+`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3 298.15 -o file_name`
 
 <ins>**S**</ins>ave a pre-formated <ins>**p**</ins>lot to file
 
-`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3  298.15 -sp file_name`
+`python3 -m ccstoolkit.corrosion_maps.cli -p 0.5 0.75 2e3 298.15 -sp file_name`
 
 
 ## Domain
