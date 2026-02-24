@@ -122,7 +122,7 @@ def main():
 		type=float,
 		nargs=4,
 		metavar=("S", "N", "CO2", "T"),
-		help="Calculate the phase diagrams at a given total S [mM], total N [mM], C activity [mM], temperature [K]."
+		help="Calculate the phase diagrams at a given total S [mM], total N [mM], CO2 activity [mM], temperature [K]."
 	)
 	
 	#Print reaction list
@@ -142,7 +142,7 @@ def main():
 	#---------------------------------------------------------------------------------------Calculate
 	#Calculate the phase diagrams	
 	if args.p:
-		S, N, C, T = args.p
+		S, N, CO2, T = args.p
 		P = {'S': S, 'N': N, 'CO2': CO2, 'T': T}
 		
 		if _verify_domain(P):
