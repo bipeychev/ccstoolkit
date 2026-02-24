@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -13,17 +13,18 @@ authors = [
     {name = "Boyan Peychev", email = "bpeychev@ipc.bas.bg"}
 ]
 dependencies = [
-    "matplotlib>=3.10.8",
-    "numpy>=1.21.5",
-    "scipy>=1.17.1",
-    "tabulate>=0.9.0"
+    "numpy>=1.21.5,<1.26",
+    "matplotlib>=3.5,<3.11",
+    "tabulate>=0.9.0,<1.0",
+    "scipy>=1.17.1; python_version >= '3.11'",
+	"scipy>=1.15.0,<1.17.2; python_version < '3.11'" #works with Python 3.7–3.10?
 ]
 
 [project.urls]
 Homepage = "https://github.com/bipeychev/ccstoolkit"
 
 [tool.setuptools.packages.find]
-where = ["ccstoolkit"]
+where = ['.']
 
 [tool.ruff.lint]
 ignore = ["E731"]
