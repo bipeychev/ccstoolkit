@@ -9,9 +9,8 @@ description = "A toolkit for studying the reactive phase behavior of scCO2 strea
 readme = "README.md"
 requires-python = ">=3.7"
 license = {text = "MIT"}
-authors = [
-    {name = "Boyan Peychev", email = "bpeychev@ipc.bas.bg"}
-]
+author = "Boyan Peychev"
+author-email = "bpeychev@ipc.bas.bg"
 dependencies = [
     "numpy>=1.21.5,<1.26",
     "matplotlib>=3.5,<3.11",
