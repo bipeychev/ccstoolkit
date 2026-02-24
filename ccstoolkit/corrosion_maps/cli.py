@@ -56,7 +56,7 @@ def _verify_domain(P):
 		print(f"N out of bounds; [{domain['N']['min']:.3f} mM : {domain['N']['max']:.3f} mM]")
 		sys.exit(1)
 			
-	if not domain['C']['min'] <= P['C'] <= domain['C']['max']:
+	if not domain['CO2']['min'] <= P['CO2'] <= domain['CO2']['max']:
 		print(f"CO2 out of bounds; [{domain['C']['min']:.3f} mM : {domain['C']['max']:.3f} mM]")
 		sys.exit(1)
 			
@@ -121,7 +121,7 @@ def main():
 		action="store",
 		type=float,
 		nargs=4,
-		metavar=("S", "N", "C", "T"),
+		metavar=("S", "N", "CO2", "T"),
 		help="Calculate the phase diagrams at a given total S [mM], total N [mM], C activity [mM], temperature [K]."
 	)
 	
@@ -143,7 +143,7 @@ def main():
 	#Calculate the phase diagrams	
 	if args.p:
 		S, N, C, T = args.p
-		P = {'S': S, 'N': N, 'C': C, 'T': T}
+		P = {'S': S, 'N': N, 'CO2': CO2, 'T': T}
 		
 		if _verify_domain(P):
 			maps = get_maps(P)
