@@ -205,23 +205,23 @@ for key, reaction in _reactions.items():
     
     #---------------------------Equation in the from a+b*lgH2O+c*lgO2=0---------------------------
     ind = subs.index('O2') if 'O2' in subs else None
-    coeff_O2 = coeffs[ind] if ind!=None else 0
+    coeff_O2 = coeffs[ind] if ind is not None else 0
 
     ind = subs.index('H2O') if 'H2O' in subs else None
-    coeff_H2O = coeffs[ind] if ind!=None else 0
+    coeff_H2O = coeffs[ind] if ind is not None else 0
 
     ind = subs.index('CO2') if 'CO2' in subs else None
-    coeff_CO2 = coeffs[ind] if ind!=None else 0
+    coeff_CO2 = coeffs[ind] if ind is not None else 0
     
     #Substances that will be approximated by Ntot
     inds = [subs.index(i) if i in subs else None for i in ['NO2','HNO3']]
     #There should be only one by equation...
-    coeff_Ntot = sum([coeffs[ind] if ind!=None else 0 for ind in inds])
+    coeff_Ntot = sum([coeffs[ind] if ind is not None else 0 for ind in inds])
 
     #Substances that will be approximated by Stot
     inds = [subs.index(i) if i in subs else None for i in ['COS','H2S','SO2','SO3','H2SO4']]
     #There should be only one by equation...
-    coeff_Stot = sum([coeffs[ind] if ind!=None else 0 for ind in inds])
+    coeff_Stot = sum([coeffs[ind] if ind is not None else 0 for ind in inds])
     
     #P = {'S': 1, 'N': 1, 'C': 2000, 'T': 298.15}   <---------   Important!!!
     #The intercept of the equations is a function of the composition.

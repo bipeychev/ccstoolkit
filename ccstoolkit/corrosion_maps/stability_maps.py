@@ -70,7 +70,7 @@ def get_stability_maps(P: dict):
     
     #Add default values, if not specified
     for key, default in [('CO2', 2e3),('T', 298.15)]:
-        if not key in P:
+        if key not in P:
             P = P | {key: default}
     
     if {'S','N'} - set(P.keys()):

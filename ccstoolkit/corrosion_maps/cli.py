@@ -8,7 +8,6 @@ import sys
 import argparse
 from tabulate import tabulate
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 
 from .maps import get_maps
 from ._reactions import get_domain

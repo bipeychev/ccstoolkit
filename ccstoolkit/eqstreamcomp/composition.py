@@ -14,7 +14,8 @@ _reactions = _reactions_.get_reactions()
 _elements = sorted(['H','N','O','S'])
 _impurities = sorted(['H2O','H2S','O2','NO2','SO2'])
 _products = sorted(['O2','H2O','COS','NO','NO2','HNO2','HNO3', 'H2S','S','SO2','SO3','H2SO4'])
-a_CO2 = 2e3
+_c_CO2 = 18.55e3
+_a_CO2 = 2e3
 
 #===================================================================================================================
 #---------------------------------------------------------------------------------------Private methods
@@ -37,8 +38,8 @@ def _soe(p,c0,c,T,a_CO2):
     if c0['O']>=(2*c0['S']+c0['N']+c0['H']/2):
         c['SO2'] = c0['S']/(1+_reactions['SO2/SO3']['K_p'](T)*c['O2']**0.5+_reactions['SO3/H2SO4']['K_p'](T)*_reactions['SO2/SO3']['K_p'](T)*c['O2']**0.5*c['H2O'])
             
-        c['SO3'] = Reactions['SO2/SO3']['K_p'](T)*c['SO2']*c['O2']**0.5
-        c['H2SO4'] = Reactions['SO3/H2SO4']['K_p'](T)*c['SO3']*c['H2O']
+        c['SO3'] = _reactions['SO2/SO3']['K_p'](T)*c['SO2']*c['O2']**0.5
+        c['H2SO4'] = _reactions['SO3/H2SO4']['K_p'](T)*c['SO3']*c['H2O']
 
         c['S'] = 0
         c['COS'] = 0
@@ -57,7 +58,7 @@ def _soe(p,c0,c,T,a_CO2):
 
     return np.array(q)
     
-def _solve(c0,T=298.15,a_CO2=a_CO2,verbose=True,local=True):
+def _solve(c0,T=298.15,a_CO2=_a_CO2,verbose=True,local=True):
     
     c = {prod: 0 for prod in _products}
     
@@ -91,7 +92,7 @@ def _solve(c0,T=298.15,a_CO2=a_CO2,verbose=True,local=True):
         if local:
             if verbose:
                 print('Convergence doubtful. Defaulting to global solve.')
-            c = _solve(c0,T,a_CO2=a_CO2,verbose=verbose,local=False)
+            c = _solve(c0,T=T,a_CO2=a_CO2,verbose=verbose,local=False)
         else:
             if verbose:
                 print('Convergence doubtful.')
@@ -99,10 +100,10 @@ def _solve(c0,T=298.15,a_CO2=a_CO2,verbose=True,local=True):
     #-----------------------------------------------------------Output
     return c
 
-def _solve_ppmx(p0,T=298.15,a_CO2=a_CO2,**kwargs):
+def _solve_ppmx(p0,T=298.15,a_CO2=_a_CO2,c_tot=_c_CO2,**kwargs):
     '''p0 = {'H2O': 10, 'H2S': 3, 'O2': 2, 'NO2': 2.5, 'SO2': 1} in ppmx'''
     
-    c0 = {key: value*c_CO2*1e-6 for key,value in p0.items()}                                #[mol/m^3]
+    c0 = {key: value*c_tot*1e-6 for key,value in p0.items()}                                #[mol/m^3]
 
     c0['H'] = 2*c0['H2S']+2*c0['H2O']                                                       #[mol/m^3]
     c0['N'] = c0['NO2']                                                                     #[mol/m^3]
@@ -111,7 +112,7 @@ def _solve_ppmx(p0,T=298.15,a_CO2=a_CO2,**kwargs):
     
     c0 = {key: c0[key] for key in _elements}
     
-    return _solve(c0,T,a_CO2,**kwargs)
+    return _solve(c0,T=T,a_CO2=a_CO2,**kwargs)
     
 #===================================================================================================================
 #---------------------------------------------------------------------------------------Public methods
@@ -133,6 +134,7 @@ def get_composition(x0,**kwargs):
         'NO2': concentration in [ppmx], 
         'SO2': concentration in [ppmx],
         'CO2': activity of CO2 in [mM],
+        'tot': total concentration of all species [mM],
         'T': temperature in [K]
     }'''
     
@@ -141,8 +143,8 @@ def get_composition(x0,**kwargs):
         return -1
         
     #Add default values, if not specified
-    for key, default in [('CO2', 2e3),('T', 298.15)]:
-        if not key in x0:
+    for key, default in [('CO2', 2e3),('tot', 18.55e3),('T', 298.15)]:
+        if key not in x0:
             x0 = x0 | {key: default}
         
     if not set(_elements) - set(x0.keys()):               #True if x has {'H','N','O','S'} keys
@@ -162,10 +164,8 @@ def get_composition(x0,**kwargs):
                 
         sol = _solve_ppmx(x0,T=x0['T'],a_CO2=x0['CO2'],**kwargs)
     else:
-        print(f'Wrong input! Insufficient number of concentrations provided.')
+        print('Wrong input! Insufficient number of concentrations provided.')
         return -1
         
     return {key: float(c) for key,c in sol.items()}
     
-
-

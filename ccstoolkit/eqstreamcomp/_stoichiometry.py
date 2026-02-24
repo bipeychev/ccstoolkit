@@ -74,7 +74,7 @@ for line, i in _unformatted_lines.items():
     #The stoichiometric coefficients
     H = np.array([cti(re.findall(r'H(\d*)', s)[0]) if 'H' in s else 0 for s in substances])
     N = np.array([cti(re.findall(r'N(\d*)', s)[0]) if 'N' in s else 0 for s in substances])
-    O = np.array([(-1 if s=='COS' else 1)*cti(re.findall(r'O(\d*)', s)[0]) if 'O' in s else 0 for s in substances])
+    O = np.array([(-1 if s=='COS' else 1)*cti(re.findall(r'O(\d*)', s)[0]) if 'O' in s else 0 for s in substances])  #noqa: E741
     S = np.array([cti(re.findall(r'S(\d*)', s)[0]) if 'S' in s else 0 for s in substances])
     
     i['H'] = H

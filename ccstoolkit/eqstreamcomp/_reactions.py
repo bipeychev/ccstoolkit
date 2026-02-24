@@ -27,14 +27,15 @@ _bounds = {
 _domain = {
     'H': {'min': 0.015, 'max': 12},                                                     #[mol/m^3]
     'N': {'min': 0.015, 'max': 4},                                                      #[mol/m^3]
-    'O': {'min': 0.015, 'max':24},                                                      #[mol/m^3]
-    'S': {'min': 0.015, 'max':4},                                                       #[mol/m^3]
-    'CO2': {'min': 0.015, 'max':3e3},                                                   #[mol/m^3]
-    'H2O': {'min': 1, 'max':200},                                                       #[ppmx]
-    'H2S': {'min': 1, 'max':100},                                                       #[ppmx]
-    'NO2': {'min': 1, 'max':200},                                                       #[ppmx]
-    'O2': {'min': 1, 'max':200},                                                        #[ppmx]
-    'SO2': {'min': 1, 'max':100},                                                       #[ppmx]
+    'O': {'min': 0.015, 'max': 24},                                                     #[mol/m^3]
+    'S': {'min': 0.015, 'max': 4},                                                      #[mol/m^3]
+    'H2O': {'min': 1, 'max': 200},                                                      #[ppmx]
+    'H2S': {'min': 1, 'max': 100},                                                      #[ppmx]
+    'NO2': {'min': 1, 'max': 200},                                                      #[ppmx]
+    'O2': {'min': 1, 'max': 200},                                                       #[ppmx]
+    'SO2': {'min': 1, 'max': 100},                                                      #[ppmx]
+    'CO2': {'min': 0.015, 'max': 3e3},                                                  #[mol/m^3]
+    'tot': {'min': 1e3, 'max': np.inf},                                                 #[mol/m^3]
     'T': {'min': 273.15-50, 'max': 273.15+100}                                          #[K]
 }
 
@@ -135,23 +136,23 @@ for key, reaction in _reactions.items():
     
     #---------------------------Equation in the from a+b*lgH2O+c*lgO2=0---------------------------
     ind = Subs.index('O2') if 'O2' in Subs else None
-    coeff_O2 = Coeffs[ind] if ind!=None else 0
+    coeff_O2 = Coeffs[ind] if ind is not None else 0
 
     ind = Subs.index('H2O') if 'H2O' in Subs else None
-    coeff_H2O = Coeffs[ind] if ind!=None else 0
+    coeff_H2O = Coeffs[ind] if ind is not None else 0
 
     ind = Subs.index('CO2') if 'CO2' in Subs else None
-    coeff_CO2 = Coeffs[ind] if ind!=None else 0
+    coeff_CO2 = Coeffs[ind] if ind is not None else 0
     
     #Substances containing N
     inds = [Subs.index(i) if i in Subs else None for i in ['NO','NO2','HNO2','HNO3']]
     #All of them are 1/2 of N_tot (there are 2 N containing substances per reaction that are equally stable)
-    coeff_Ntot = sum([Coeffs[ind] if ind!=None else 0 for ind in inds])
+    coeff_Ntot = sum([Coeffs[ind] if ind is not None else 0 for ind in inds])
     
     #Substances containing N
     inds = [Subs.index(i) if i in Subs else None for i in ['COS','H2S','SO2','SO3','H2SO4']]   #S is solid!
     #All of them are 1/2 of S_tot (there are 2 S containing substances per reaction that are equally stable)
-    coeff_Stot = sum([Coeffs[ind] if ind!=None else 0 for ind in inds])
+    coeff_Stot = sum([Coeffs[ind] if ind is not None else 0 for ind in inds])
     
     #P = {'S': 1, 'N': 1, 'C': 2000, 'T': 298.15}   <---------   Important!!!
     #The intercept of the equations is a function of the composition.

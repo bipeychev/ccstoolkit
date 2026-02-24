@@ -31,6 +31,7 @@ p0 = {
 	'O2': 10,				#[ppmx]
 	'SO2': 10,				#[ppmx] 
 	'CO2': 2e3,				#[mol/m^3], [mM]	#Activity of CO2								#Optional	#Default is 2000
+	'tot': 18.55e3,			#[mol/m^3], [mM]	#Concentration of all species ~ density of CO2	#Optional	#Default is 18.55e3
 	'T': 298.15				#[K]				#Temperature									#Optional	#Default is 298.15
 }
 

@@ -7,7 +7,7 @@ name = "ccstoolkit"
 version = "0.2.0"
 description = "A toolkit for studying the reactive phase behavior of scCO2 streams and steel corrosion."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.7"
 license = {text = "MIT"}
 authors = [
     {name = "Boyan Peychev", email = "bpeychev@ipc.bas.bg"}
@@ -24,3 +24,6 @@ Homepage = "https://github.com/bipeychev/ccstoolkit"
 
 [tool.setuptools.packages.find]
 where = ["ccstoolkit"]
+
+[tool.ruff.lint]
+ignore = ["E731"]
