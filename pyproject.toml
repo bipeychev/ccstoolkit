@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ccstoolkit"
+version = "0.2.0"
+description = "A toolkit for studying the reactive phase behavior of scCO2 streams and steel corrosion."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Boyan Peychev", email = "bpeychev@ipc.bas.bg"}
+]
+dependencies = [
+    "matplotlib>=3.10.8",
+    "numpy>=1.21.5",
+    "scipy>=1.17.1",
+    "tabulate>=0.9.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/bipeychev/ccstoolkit"
+
+[tool.setuptools.packages.find]
+where = ["ccstoolkit"]
