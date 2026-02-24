@@ -6,7 +6,7 @@ import numpy as np
 def _angle(xy1: tuple, xy2: tuple):
     x1, y1 = xy1
     x2, y2 = xy2
-    return np.atan2(y2-y1, x2-x1)
+    return np.arctan2(y2-y1, x2-x1)
 
 #Get the area of a polygon
 def _polygon_area(face: list):
