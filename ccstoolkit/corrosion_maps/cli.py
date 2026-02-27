@@ -9,7 +9,7 @@ import argparse
 from tabulate import tabulate
 import matplotlib.pyplot as plt
 
-from .maps import get_maps
+from .stability_maps import get_stability_maps
 from ._reactions import get_domain
 from ._reactions import get_bounds
 from ._reactions import get_reactions
@@ -146,7 +146,7 @@ def main():
 		P = {'S': S, 'N': N, 'CO2': CO2, 'T': T}
 		
 		if _verify_domain(P):
-			maps = get_maps(P)
+			maps = get_stability_maps(P)
 	
 	#---------------------------------------------------------------------------------------Output
 	output = ''
