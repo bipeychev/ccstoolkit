@@ -1,5 +1,5 @@
 # corrosion_maps
-A small Python library for creating and studying corrosion maps of steel in the context of scCO<sub>2</sub> streams.
+A small Python library for creating and studying corrosion maps of steel in the context of dense CO<sub>2</sub> streams.
 
 ## How to use as a library
 ```
