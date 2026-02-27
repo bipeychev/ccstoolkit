@@ -1,5 +1,5 @@
 # eqstreamcomp
-A small Python library for studying the equilibrium composition of scCO<sub>2</sub> streams.
+A small Python library for studying the equilibrium composition of dense CO<sub>2</sub> streams.
 
 ## Citation 
 If you find this library useful in your research, please cite the following paper:
