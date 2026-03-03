@@ -1,6 +1,12 @@
 # corrosion_maps
 A small Python library for creating and studying corrosion maps of steel in the context of dense CO<sub>2</sub> streams.
 
+## Citation 
+If you find this library useful in your research, please cite the following paper:
+
+S. Faraji, R. M. Walker, B. Peychev, J. Sonke, R. I. Slavchov (2026). Surface chemistry of carbon steel in contact with CO2 streams containing impurities. *Corrosion Science*, 113740.
+[![Static Badge](https://img.shields.io/badge/doi-10.1016/j.corsci.2026.113740-5077AB?logo=doi&logoColor=white)](https://doi.org/10.1016/j.corsci.2026.113740)
+
 ## How to use as a library
 ```
 #Import
