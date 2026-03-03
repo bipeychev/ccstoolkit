@@ -4,7 +4,7 @@ A small Python library for studying the equilibrium composition of dense CO<sub>
 ## Citation 
 If you find this library useful in your research, please cite the following paper:
 
-Slavchov, R. I., Iqbal, M. H., Faraji, S., Madden, D., Sonke, J., & Clarke, S. M. (2024). Corrosion maps: Stability and composition diagrams for corrosion problems in CO2 transport. *Corrosion Science, 236*, 112204.
+R. I. Slavchov, M. H.Iqbal, S. Faraji, D. Madden, J. Sonke, S. M. Clarke (2024). Corrosion maps: Stability and composition diagrams for corrosion problems in CO2 transport. *Corrosion Science, 236*, 112204.
 [![Static Badge](https://img.shields.io/badge/doi-10.1016/j.corsci.2024.112204-5077AB?logo=doi&logoColor=white)](https://doi.org/10.1016/j.corsci.2024.112204)
 
 ## How to use the library
