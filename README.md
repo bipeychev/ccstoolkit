@@ -19,8 +19,8 @@ pip install git+https://github.com/bipeychev/ccstoolkit.git
 
   **Description:** Create and plot corrosion maps of steel in contact with dense CO<sub>2</sub> streams.
   
-  **Paper:** S. Faraji, R. M. Walker, B. Peychev, J. Sonke, R. I. Slavchov, “Surface chemistry of carbon steel in contact with CO2 streams containing impurities” Corrosion Science (2026) (Submitted for publication)
-[![Static Badge](https://img.shields.io/badge/doi-placeholder-5077AB?logo=doi&logoColor=white)]()
+  **Paper:** S. Faraji, R. M. Walker, B. Peychev, J. Sonke, R. I. Slavchov (2026). Surface chemistry of carbon steel in contact with CO2 streams containing impurities. *Corrosion Science*, 113740
+[![Static Badge](https://img.shields.io/badge/doi-10.1016/j.corsci.2026.113740-5077AB?logo=doi&logoColor=white)](https://doi.org/10.1016/j.corsci.2026.113740)
 
 ## License
 The software is licensed under the MIT license. You are free to copy, modify, merge, publish, distribute, sublicense, and/or sell
