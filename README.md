@@ -12,7 +12,7 @@ pip install git+https://github.com/bipeychev/ccstoolkit.git
 
   **Description:** Find the equilibrium composition of a dense CO<sub>2</sub> streams. Create stability and stoichiometric plots.
   
-  **Paper:** Slavchov, R. I., Iqbal, M. H., Faraji, S., Madden, D., Sonke, J., & Clarke, S. M. (2024). Corrosion maps: Stability and composition diagrams for corrosion problems in CO2 transport. *Corrosion Science, 236*, 112204. 
+  **Paper:** R. I. Slavchov, M. H. Iqbal, S. Faraji, D. Madden, J. Sonke, S. M. Clarke (2024). Corrosion maps: Stability and composition diagrams for corrosion problems in CO2 transport. *Corrosion Science, 236*, 112204. 
 [![Static Badge](https://img.shields.io/badge/doi-10.1016/j.corsci.2024.112204-5077AB?logo=doi&logoColor=white)](https://doi.org/10.1016/j.corsci.2024.112204)
 
 - [**Corrosion maps**](ccstoolkit/corrosion_maps/)
