@@ -35,7 +35,7 @@ p0 = {
 	'T': 298.15				#[K]				#Temperature									#Optional	#Default is 298.15
 }
 
-print(eqstreamcomp.get_composition(p0))
+print(eqstreamcomp.get_composition(p0,options={'maxiter': 1000, 'maxfev': 1000}))
 
 #--------------------------Get the nodes of the stream stoichiometry map
 P = {
