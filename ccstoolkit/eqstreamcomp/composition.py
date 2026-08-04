@@ -58,7 +58,7 @@ def _soe(p,c0,c,T,a_CO2):
 
     return np.array(q)
     
-def _solve(c0,T=298.15,a_CO2=_a_CO2,verbose=True,local=True, **kwargs):
+def _solve(c0,T=298.15,a_CO2=_a_CO2,verbose=True,local=True,**kwargs):
     
     c = {prod: 0 for prod in _products}
     
