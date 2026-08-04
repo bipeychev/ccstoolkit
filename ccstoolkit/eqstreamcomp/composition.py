@@ -58,7 +58,7 @@ def _soe(p,c0,c,T,a_CO2):
 
     return np.array(q)
     
-def _solve(c0,T=298.15,a_CO2=_a_CO2,verbose=True,local=True):
+def _solve(c0,T=298.15,a_CO2=_a_CO2,verbose=True,local=True, **kwargs):
     
     c = {prod: 0 for prod in _products}
     
@@ -76,10 +76,10 @@ def _solve(c0,T=298.15,a_CO2=_a_CO2,verbose=True,local=True):
         indx = np.argmin(energies)
         x0, y0 = points[indx]
 
-        sol = minimize(lambda p: np.sum([i**2 for i in _soe(p,c0,c,T,a_CO2)]), [x0,y0], method='Nelder-Mead', tol=1e-6)
+        sol = minimize(lambda p: np.sum([i**2 for i in _soe(p,c0,c,T,a_CO2)]), [x0,y0], method='Nelder-Mead', tol=1e-6, **kwargs)
         #Reducing the tolerance will quickly lead to overflow errors
     else:
-        sol = differential_evolution(lambda p: np.sum([i**2 for i in _soe(p,c0,c,T,a_CO2)]), [(0,1),(0,1)], tol=1e-12)
+        sol = differential_evolution(lambda p: np.sum([i**2 for i in _soe(p,c0,c,T,a_CO2)]), [(0,1),(0,1)], tol=1e-12, **kwargs)
         #Increasing the tolerance will quickly lead to local solutions
 
     #Check if it solved
