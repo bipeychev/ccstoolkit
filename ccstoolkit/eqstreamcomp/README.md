@@ -37,7 +37,7 @@ p0 = {
 
 print(eqstreamcomp.get_composition(p0,options={'maxiter': 1000, 'maxfev': 1000}))
 
-#The input steam can have only some of the studied impurities, but must have all four of the elements {H,N,O,S}
+#The input stream can have only some of the studied impurities, but must have all four of the elements {H,N,O,S}
 p0 = {
 	'H2O': 10,				#[ppmx]
 	'H2S': 10,				#[ppmx]  
