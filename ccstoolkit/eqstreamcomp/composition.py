@@ -237,5 +237,8 @@ def get_composition(x0,**kwargs):
 		return -1
 	
 	#------------------Return the equilibrium composition	
-	return {key: float(c) for key,c in sol.items()}
+	if sol == -1:
+		return -1
+	else:
+		return {key: float(c) for key,c in sol.items()}
 	
