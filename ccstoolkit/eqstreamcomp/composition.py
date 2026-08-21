@@ -237,8 +237,9 @@ def get_composition(x0,**kwargs):
 		return -1
 	
 	#------------------Return the equilibrium composition	
+	#True if the oxygen is too low
 	if sol == -1:
-		return -1
+		return -2
 	else:
 		return {key: float(c) for key,c in sol.items()}
 	
