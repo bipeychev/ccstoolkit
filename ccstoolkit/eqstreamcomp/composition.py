@@ -81,7 +81,7 @@ def _solve(c0,T=298.15,a_CO2=_a_CO2,verbose=True,local=True,**kwargs):
 	if c0['O']<c0['H']/2+c0['N']-c0['S']:					 #Outside of the studied range
 		if verbose:
 			print('Oxygen too low. Outside of studied range.')
-		return c
+		return -1
 	
 	#------------------Local solve
 	if local:
