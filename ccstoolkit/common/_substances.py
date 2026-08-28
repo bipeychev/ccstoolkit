@@ -1,6 +1,8 @@
 #!/usr/bin/python3
     
 #Properties of substances
+#The data is collected from publicly available sources
+#A large portion of the data is from 'D.R. Lide, ed. CRC handbook of chemistry and physics, CRC press'
 _substances_TD_data = {
     #substance: {dfg in kJ/mol, dfh in kJ/mol, cp in J/mol/K, solid ? True : False}
     'O2': {'dfg': 0, 'dfh': 0, 'cp': 29.4, 'solid': False},
