@@ -95,7 +95,7 @@ def main():
 	if args.constants:
 		substances = get_substances_TD_data()
 		
-		output += f"-------------------------------TD data-------------------------------" + '\n'
+		output += f"----------------------------------TD data-----------------------------------" + '\n'
 		
 		headers = ["Substance", "dfg [kJ/mol]", "dfh [kJ/mol]", "cp [J/mol/K]", "solid"]
 		rows = [[key, data['dfg'], data['dfh'], data['cp'], data['solid']] for key,data in substances.items()]
