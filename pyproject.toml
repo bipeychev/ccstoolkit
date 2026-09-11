@@ -27,8 +27,7 @@ Homepage = "https://github.com/bipeychev/ccstoolkit"
 
 [project.scripts]
 "ccstoolkit.eqstreamcomp" = "ccstoolkit.eqstreamcomp.cli:main"
-#ccstoolkit.eqstreamcomp = "ccstoolkit.eqstreamcomp.cli:main"
-#ccstoolkit.corrosion_maps = "ccstoolkit.corrosion_maps.cli:main"
+"ccstoolkit.corrosion_maps" = "ccstoolkit.corrosion_maps.cli:main"
 
 [tool.setuptools.packages.find]
 where = ['.']
