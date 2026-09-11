@@ -107,7 +107,7 @@ def main():
 	if args.reactions:
 		reactions = get_reactions()
 		
-		output += f"------------------------------Reactions------------------------------" + '\n'
+		output += f"---------------------------------Reactions----------------------------------" + '\n'
 		for key, reaction in reactions.items():
 			output += reaction['reaction']['reaction'] + '\n'
 			output += 'key: ' + key + '\n'
@@ -120,7 +120,7 @@ def main():
 	if (args.print or args.o):
 	
 		if args.eq and type(c)!=int:
-			output += f"-----------------------Equilibrium composition-----------------------" + '\n'
+			output += f"--------------------------Equilibrium composition---------------------------" + '\n'
 			
 			headers = ["Substance", "c [mol/m^3]"]
 			rows = [[key, value] for key, value in c.items()]
@@ -132,7 +132,7 @@ def main():
 			output += table+'\n\n'
 				
 		if args.sto:
-			output += f"--------------------------Stoichiometry map--------------------------" + '\n'
+			output += f"-----------------------------Stoichiometry map------------------------------" + '\n'
 			for region in stoichiometry:
 				output += region['name'] + '\n'
 				output += f"Area: {region['area']:.2f}" + '\n'
@@ -140,7 +140,7 @@ def main():
 				output += f"Vertices: {region['points']}" + '\n\n'
 				
 		if args.sta:
-			output += f"----------------------------Stability map----------------------------" + '\n'
+			output += f"-------------------------------Stability map--------------------------------" + '\n'
 			for region in stability:
 				output += region['name'] + '\n'
 				output += f"Area: {region['area']:.2f}" + '\n'
