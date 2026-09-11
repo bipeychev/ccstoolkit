@@ -155,7 +155,7 @@ def main():
 	if args.constants:
 		substances = get_substances_TD_data()
 		
-		output += f"------------------------------------TD data------------------------------------" + '\n'
+		output += f"-------------------------------TD data-------------------------------" + '\n'
 		
 		headers = ["Substance", "dfg [kJ/mol]", "dfh [kJ/mol]", "cp [J/mol/K]", "solid"]
 		rows = [[key, data['dfg'], data['dfh'], data['cp'], data['solid']] for key,data in substances.items()]
@@ -167,7 +167,7 @@ def main():
 	if args.reactions:
 		reactions = get_reactions()
 		
-		output += f"------------------------------------Reactions------------------------------------" + '\n'
+		output += f"------------------------------Reactions------------------------------" + '\n'
 		for key, reaction in reactions.items():
 			output += reaction['reaction']['reaction'] + '\n'
 			output += 'key: ' + key + '\n'
@@ -179,7 +179,7 @@ def main():
 	#Maps data
 	if (args.print or args.o) and args.cm:
 		for key, map_ in maps.items():
-			output += f"------------------------------------{key} map------------------------------------" + '\n'
+			output += f"--------------------------------{key} map--------------------------------" + '\n'
 			for region in map_:
 				output += region['name'] + '\n'
 				output += f"Area: {region['area']:.2f}" + '\n'
