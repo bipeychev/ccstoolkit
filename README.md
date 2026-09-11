@@ -29,4 +29,4 @@ copies of the software. Please, refer to the [full text](LICENSE).
 
 
 ## Version
-0.2.1
+0.3.0

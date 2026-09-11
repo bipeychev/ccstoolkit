@@ -115,35 +115,35 @@ def main():
 	#Print reaction list
 	parser.add_argument("-r","--reactions",action="store_true",help="Print the list of reactions.")
 	
-	#Calculate the phase diagrams
+	#Calculate the corrosion maps
 	parser.add_argument(
-		"-p",
+		"-cm",
 		action="store",
 		type=float,
 		nargs=4,
-		metavar=("S", "N", "CO2", "T"),
-		help="Calculate the phase diagrams at a given total S [mM], total N [mM], CO2 activity [mM], temperature [K]."
+		metavar=("N", "S", "CO2", "T"),
+		help="Calculate the corrosion maps at a given N content [mol/m^3], S content [mol/m^3], CO2 activity [mol/m^3], and temperature [K]."
 	)
 	
-	#Print reaction list
+	#Print the maps
 	parser.add_argument("-pr","--print",action="store_true",help="Print the maps.")
 	
 	#Plot
-	parser.add_argument("-pl","--plot",action="store_true",help="Plot the maps.")
+	parser.add_argument("-pl","--plot",action="store_true",help="Show the maps.")
 	
 	#Save plot
-	parser.add_argument("-sp",action="store",type=str,metavar='file',help="Save the plot.")
+	parser.add_argument("-sp",action="store",type=str,metavar='file',help="Save the plot to file.")
 	
 	#Output
-	parser.add_argument("-o",action="store",type=str,metavar='file',help="Output file name.")
+	parser.add_argument("-o",action="store",type=str,metavar='file',help="Save text output to file.")
 	
 	args = parser.parse_args()
 	
 	#---------------------------------------------------------------------------------------Calculate
-	#Calculate the phase diagrams	
-	if args.p:
-		S, N, CO2, T = args.p
-		P = {'S': S, 'N': N, 'CO2': CO2, 'T': T}
+	#Calculate the stability maps	
+	if args.cm:
+		N, S, CO2, T = args.cm
+		P = {'N': N, 'S': S, 'CO2': CO2, 'T': T}
 		
 		if _verify_domain(P):
 			maps = get_stability_maps(P)
@@ -151,21 +151,23 @@ def main():
 	#---------------------------------------------------------------------------------------Output
 	output = ''
 	
-	#Print TD constants
+	#TD constants
 	if args.constants:
 		substances = get_substances_TD_data()
+		
+		output += f"------------------------------------TD data------------------------------------" + '\n'
 		
 		headers = ["Substance", "dfg [kJ/mol]", "dfh [kJ/mol]", "cp [J/mol/K]", "solid"]
 		rows = [[key, data['dfg'], data['dfh'], data['cp'], data['solid']] for key,data in substances.items()]
 		table = tabulate(rows, headers=headers, tablefmt="github", floatfmt=".2f") #tablefmt="grid"
 		
-		output += table + '\n'
+		output += table + '\n\n'
 	
-	#Print reaction list
+	#Reaction list
 	if args.reactions:
 		reactions = get_reactions()
 		
-		output += '\n'
+		output += f"------------------------------------Reactions------------------------------------" + '\n'
 		for key, reaction in reactions.items():
 			output += reaction['reaction']['reaction'] + '\n'
 			output += 'key: ' + key + '\n'
@@ -174,23 +176,22 @@ def main():
 			output += 'drcp: ' + f"{reaction['drcp']:.2f} J/mol/K" + '\n'
 			output += 'K_chi_298.15: ' + f"{reaction['K_chi_298']:.2e}" + '\n\n'
 	
-	#Print reaction list
-	if (args.print or args.o) and args.p:
-		output += '\n'
+	#Maps data
+	if (args.print or args.o) and args.cm:
 		for key, map_ in maps.items():
 			output += f"------------------------------------{key} map------------------------------------" + '\n'
 			for region in map_:
 				output += region['name'] + '\n'
 				output += f"Area: {region['area']:.2f}" + '\n'
-				output += f"Centroid: {region['centroid']}" + '\n'
+				output += f"Centroid: {list(region['centroid'])}" + '\n'
 				output += f"Vertices: {region['points']}" + '\n\n'
 	
 	#Print
 	if output:
 		_print_output(output, args.o)
 	
-	#Print reaction list
-	if (args.plot or args.sp) and args.p:
+	#Plot
+	if (args.plot or args.sp) and args.cm:
 		_plot(maps,args.sp)
 	
 	return 0

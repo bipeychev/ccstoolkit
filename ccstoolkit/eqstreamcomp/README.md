@@ -64,6 +64,28 @@ P = {
 print(eqstreamcomp.get_stability_map(P))
 ```
 
+## How to use the cli
+
+<ins>**Pr**</ins>int the <ins>**eq**</ins>uilibrium composition
+
+`python3 -m ccstoolkit.eqstreamcomp.cli -eq 1 1 1 1 2e3 298.15 -pr`
+
+Save to an <ins>**o**</ins>utput to file
+
+`python3 -m ccstoolkit.eqstreamcomp.cli -eq 1 1 1 1 2e3 298.15 -o file_name`
+
+<ins>**Pr**</ins>int the vertices of the <ins>**sto**</ins>ichiometry map
+
+`python3 -m ccstoolkit.eqstreamcomp.cli -sto 1 -pr`
+
+<ins>**Pr**</ins>int the vertices of the <ins>**sta**</ins>bility map
+
+`python3 -m ccstoolkit.eqstreamcomp.cli -sta 0.5 0.75 2e3 298.15 -pr`
+
+Get <ins>**h**</ins>elp
+
+`python3 -m ccstoolkit.eqstreamcomp.cli -h`
+
 ## Domain
 $H\ \in\ [0.015\ \text{mM},\ 12\ \text{mM}]\ \approx\ [0.8\ \text{ppmx},\ 650\ \text{ppmx}]\ \text{in scCO}_2$
 
