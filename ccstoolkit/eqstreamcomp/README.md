@@ -55,8 +55,8 @@ print(eqstreamcomp.get_stoichiometry_map(P))
 
 #--------------------------Get the nodes of the stream stability map
 P = {
-	'S': 0.5,				#[mol/m^3], [mM]	#Total amount of sulphur (H2S, SOx, ...)
 	'N': 0.75,				#[mol/m^3], [mM]	#Total amount of nitrogen (NOx, HNOx, ...)
+	'S': 0.5,				#[mol/m^3], [mM]	#Total amount of sulphur (H2S, SOx, ...)
 	'CO2': 2e3,				#[mol/m^3], [mM]	#Activity of CO2								#Optional	#Default is 2000
 	'T': 298.15				#[K]				#Temperature									#Optional	#Default is 298.15
 }
@@ -80,7 +80,7 @@ Save to an <ins>**o**</ins>utput to file
 
 <ins>**Pr**</ins>int the vertices of the <ins>**sta**</ins>bility map
 
-`python3 -m ccstoolkit.eqstreamcomp.cli -sta 0.5 0.75 2e3 298.15 -pr`
+`python3 -m ccstoolkit.eqstreamcomp.cli -sta 0.75 0.5 2e3 298.15 -pr`
 
 Get <ins>**h**</ins>elp
 
