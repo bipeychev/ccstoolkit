@@ -19,7 +19,8 @@ _bounds = {
 _domain = {
     'S': {'min': 0.015, 'max': 4},                                                       #[mol/m^3]
     'N': {'min': 0.015, 'max': 4},                                                       #[mol/m^3]
-    'N/S': {'min': 0.050, 'max': 4}                                                      #[-]
+    'N/S': {'min': 0.015/4, 'max': 4/0.015}                                              #[-]
+    #'N/S': {'min': 0.050, 'max': 4}                                                     #[-]
 }
 
 #The stoichiometric lines that are going to be plot
