@@ -220,7 +220,7 @@ def _get_regions(lines: dict, P: dict, x_bounds: tuple, y_bounds: tuple):
     
     #Calculate the area of each face
     for region in regions:
-        region['area'] = _math._polygon_area(region['points'])
+        region['area'] = list(_math._polygon_area(region['points']))
         
     #One gets the inner faces + the outer (infinite) face of the bounding box.
     #The latter will always have the largest area + a different sign of the area.
@@ -228,7 +228,7 @@ def _get_regions(lines: dict, P: dict, x_bounds: tuple, y_bounds: tuple):
 
     #Calculate centroids
     for region in inner_regions:
-        region['centroid'] = _math._calculate_centroid(region['points'])
+        region['centroid'] = list(_math._calculate_centroid(region['points']))
         
     #Sort the regions and keys
     key_order = ['bounds ids','area','centroid','points']
