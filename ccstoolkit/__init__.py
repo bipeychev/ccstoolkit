@@ -4,4 +4,4 @@ from . import corrosion_maps
 
 __all__ = ["corrosion_maps","eqstreamcomp"]
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"

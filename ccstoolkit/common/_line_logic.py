@@ -117,8 +117,8 @@ def _get_active_lines(lines: dict, P: dict, x_bounds: tuple, y_bounds: tuple):
 			#Works because: all lines are straight and the segments are sorted
 			#The points need to be rounded, otherwise truncation errors make the match problematic!
 			active_line = dict()
-			active_line['id'] = key									  #The id of the line
-			active_line['p0'] = _math._format_xy(segments[0][0])		 #One end point
+			active_line['id'] = key									    #The id of the line
+			active_line['p0'] = _math._format_xy(segments[0][0])		#One end point
 			active_line['p1'] = _math._format_xy(segments[-1][1])		#The other end point
 			active_lines.append(active_line)
 			
@@ -134,8 +134,7 @@ def _get_regions(lines: dict, P: dict, x_bounds: tuple, y_bounds: tuple):
 	active_lines = _get_active_lines(lines, P, x_bounds, y_bounds)
 	
 	#Get all intersection points
-	active_intersections = [p for line in active_lines for p in [line['p0'],line['p1']]]
-	active_intersections = set(active_intersections)
+	active_intersections = {p for line in active_lines for p in [line['p0'],line['p1']]}
 
 	#Get the intersection points that lie on the bounding box
 	intersections_box = [(x,y) for x,y in active_intersections if x in x_bounds or y in y_bounds]
@@ -257,3 +256,48 @@ def _get_regions(lines: dict, P: dict, x_bounds: tuple, y_bounds: tuple):
 		
 	return inner_regions
 	
+#Get the active line segments formatted
+def _get_edges(lines: dict, P: dict, x_bounds: tuple, y_bounds: tuple):
+	#Get the lines
+	lines = _get_active_lines(lines, P, x_bounds, y_bounds)
+	
+	#Create a container for the edges
+	edges = list()
+	
+	#Go through every line
+	for line in lines:
+	
+		#Save the result
+		edges.append({'id': line['id'], 'xy': [line['p0'],line['p1']], 'x': [line['p0'][0],line['p1'][0]], 'y': [line['p0'][1],line['p1'][1]]})
+
+	return edges
+
+#Get the active intersection points
+def _get_vertices(lines: dict, P: dict, x_bounds: tuple, y_bounds: tuple):
+	#Get the lines
+	edges = _get_active_lines(lines, P, x_bounds, y_bounds)
+	
+	#Make a set of all the intersection points
+	points = {p for line in edges for p in [line['p0'],line['p1']]}
+	
+	#Create a container for the vertices
+	vertices = list()
+	
+	#Go through every intersection point
+	for point in points:
+		#Create a container line ids
+		ids = list()
+		
+		#Go through every line
+		for edge in edges:
+		
+			#If  the line intersects that point
+			if point in [edge['p0'],edge['p1']]:
+			
+				#Save id
+				ids.append(edge['id'])
+		
+		#Save the result
+		vertices.append({'ids': ids, 'xy': point})
+
+	return vertices
