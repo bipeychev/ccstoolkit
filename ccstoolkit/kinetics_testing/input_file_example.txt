@@ -1,0 +1,62 @@
+# reactor options: batch, pfr, cstr
+# qss: input true or false (available for batch or pfr reactors). default = false
+# for a batch or cstr reactor, reaction time must be specified
+# for a pfr of cstr reactor, resisdence time must be specified
+# grid points defaults to 1000
+# reaction type options: net, elementary. if net, a rate law must be provided for each reaction (this can be equivalent to the elementary rate law)
+# parameter type options: rate constant, Arrhenius. if Arrhenius, 2 parameters A and Ea must be provided for each reaction
+# temperature must be given in kelvin. unnecessary if parameter type = rate constant
+
+# UNITS: in mM and s please 
+
+[CONDITIONS]
+REACTOR TYPE = batch
+QSS = false
+REACTION TIME = 2000
+RESIDENCE TIME = 100
+GRID POINTS = 1000
+REACTION TYPE = elementary
+PARAMETER TYPE = rate constant
+TEMPERATURE (K) = 273
+
+
+# reaction information is formatted as: reaction name | rate law (if using net reactions) | kinetic parameters | reaction
+# the reaction can be irreversible (using ->) or reversible (using <=>)
+# if reversible, additional kinetic parameters must be provided for the reverse reaction
+# the rate law is provided as e.g. k*[A]^1/2*[B]^3
+
+[REACTIONS]
+r1 | 7.8e-5  | i2N2 -> 2i + N2
+r2 | 0.86    | BuO2 + BuH -> BuO2H + Bu
+r3 | 0.86e-3     | iO2 + BuH -> iO2H + Bu
+r4 | 6e7     | Bu + O2 -> BuO2
+r5 | 6e7     | i + O2 -> iO2
+r6 | 6e7     | 2BuO2 -> Bu2O2 + O2
+
+	
+# species information is formatted as: species | initial concentration | type (from stable, reactive intermediate, buffered)
+
+[SPECIES]
+BuH  | 8910 | buffered 
+O2   | 10   | buffered 
+iO2  | 0    | reactive intermediate 
+Bu   | 0    | reactive intermediate 
+i    | 0    | reactive intermediate 
+BuO2 | 0    | reactive intermediate 
+BuO2H| 0    | stable 
+i2N2 | 48   | stable 
+iO2H | 0    | stable 
+Bu2O2| 0    | stable 
+N2   | 0    | stable 
+
+
+# experimental data must be provided for rate constant optimisation
+# data type options: final conc (one time and concentration value for a given species), time course (multiple corresponding values)
+
+[EXPERIMENTAL]
+DATA TYPE = final conc
+DATA = {"BuO2H": {"time": 2000, "values": 8,}, "O2": {"time": 2000, "values": 10,}}
+
+
+
+
