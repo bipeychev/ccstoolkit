@@ -79,10 +79,6 @@ class ARRHENIUS_FITTING(FITTING):
 		##if ssr >= 
 		##	raise ValueError(f"The result provided has a high SSR and may not be optimal. Please pass global_search=True to use differetial evolutional an dpotentially generate a better fit."
 
-		# check result is well positioned
-		if result.status == 1:
-			raise ValueError(f"\nThe initial guess for the rate constant of reaction '{', '.join(self.optimised_reactions)}' is not optimal for this model. Either provide a different initial guess or pass scan=True to generate a more suitable starting point.")
-
 		if not result.success:
 			raise ValueError(f"Optimisation did not converge. Solver message: {result.message}. A global method can be used by passing global_search=True.")
 
