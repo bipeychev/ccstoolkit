@@ -1,6 +1,7 @@
 
 ## contains the functions for creating, printing, and saving results of simulation
 
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import cairosvg
@@ -99,30 +100,39 @@ class RESULTS():
 		final_concs = "\n".join(lines)
 		return final_concs
 
-	def plot_seperate_results(self, filename=None, show=True):
+	def plot_seperate_results(self, species=None, x_limits=None, y_limits=None, filename=None, show=True):
 		for key, i in self.reactor.result.items():
-			plt.figure(figsize=(9, 5))
+			if key in species:
+				plt.figure(figsize=(9, 5))
 
-			plt.plot(i['x'], i['y'], lw=2, label=key)
+				plt.plot(i['x'], i['y'], lw=2, label=key)
 
-			plt.title(f"Concentration Profile: {key}", fontsize=18)
-			plt.xlabel(r'$t$', fontsize=16)
-			plt.ylabel(r'$c_i$', fontsize=16)
+				plt.title(f"Concentration Profile: {key}", fontsize=18)
+				plt.xlabel(r'$t$', fontsize=16)
+				plt.ylabel(r'$c_i$', fontsize=16)
 
-			#plt.ylim(-5, 70)
-			#plt.xlim(100,6000)
-			plt.legend(frameon=False, fontsize=14)
+				if x_limits:
+					plt.xlim(x_limits[0],x_limits[1])
 
-			plt.tight_layout()
+				if y_limits is None:
+					max_val = np.max(i['y'])
+					min_val = np.min(i['y'])
+					y_limits=[min_val,max_val]
 
-			if filename:
-				# Add the species name to the filename
-				base, ext = os.path.splitext(filename)
-				species_filename = f"{base}_{key}{ext}"
-				plt.savefig(species_filename, dpi=300, bbox_inches="tight")
+				plt.ylim(y_limits[0],y_limits[1])
 
-			if show:
-				plt.show()
+				plt.legend(frameon=False, fontsize=14)
+
+				plt.tight_layout()
+
+				if filename:
+					# Add the species name to the filename
+					base, ext = os.path.splitext(filename)
+					species_filename = f"{base}_{key}{ext}"
+					plt.savefig(species_filename, dpi=300, bbox_inches="tight")
+
+				if show:
+					plt.show()
 
 	def plot_results(self, filename=None, show=True):
 		plt.figure(figsize=(9, 5))

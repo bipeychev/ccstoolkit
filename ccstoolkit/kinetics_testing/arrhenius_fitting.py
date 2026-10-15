@@ -21,6 +21,8 @@ class ARRHENIUS_FITTING(FITTING):
 		return initial_guesses
 
 	def _check_initial_guesses(self, init_initial_guesses):
+		init_initial_guesses = np.array(init_initial_guesses, dtype=float)
+
 		# checks given initial guesses are in the correct format [ln(A1), Ea1, ln(A2), Ea2,...]
 		if len(init_initial_guesses) != 2*len(self.optimised_reactions):
 			raise ValueError(f"Expected 2 initial guesses (A and Ea) for each optimised reaction (total {2*len(self.optimised_reactions)}), but recieved {len(init_initial_guesses)}.")
@@ -52,49 +54,66 @@ class ARRHENIUS_FITTING(FITTING):
 
 		return np.asarray(residuals)
 
-	# fits arrhenius A and Ea values
+	# fits arrhenius A and Ea values using scipy least squares
 	def fit_arrhenius(self, scan=False, global_search=False, method="trf", diff_step=None, x_scale='jac', ftol=1e-12, xtol=None, gtol=1e-12, **kwargs):
-		print(f"\nOptimising arrhenius parameters A and Ea for reactions: {', '.join(self.optimised_reactions)}")
 
 		# bounds 
 		lower_bound = np.empty(2*len(self.optimised_reactions))
 		upper_bound = np.empty(2*len(self.optimised_reactions))
-
-		A_min = 1e-10
-		A_max = 1e30
-		lower_bound[::2] = np.log(A_min)
-		upper_bound[::2] = np.log(A_max)
-
-		Ea_min = 0
-		Ea_max = 1e6
-		lower_bound[1::2] = Ea_min
-		upper_bound[1::2] = Ea_max
+		lower_bound[::2] = np.log(1e-10)
+		upper_bound[::2] = np.log(1e30)
+		lower_bound[1::2] = 0
+		upper_bound[1::2] = 1e6
 
 		if global_search:
-			lgA_guesses = self._global_search(lower_bound, upper_bound)
+			init_guesses = self._global_search(lower_bound, upper_bound)
 		elif scan:
-			# finds a reasonable initial guess for the system
-			scan_guesses = self._arrhenius_log_scan()
-			lgA_guesses = self._log_convert(scan_guesses)
+			init_guesses = self._log_convert(self._arrhenius_log_scan())
 		else:
-			# conversion from [A, Ea] to [ln(A), Ea]
-			lgA_guesses = self._log_convert(self.initial_guesses)
+			init_guesses = self._log_convert(self.initial_guesses)
 
 		# minimise residuals 
-		result = least_squares(self._arrhenius_residuals, x0=lgA_guesses, bounds=(lower_bound, upper_bound), method=method, diff_step=diff_step, ftol=ftol, xtol=xtol, gtol=gtol, **kwargs)
+		result = least_squares(self._arrhenius_residuals, x0=init_guesses, bounds=(lower_bound, upper_bound), method=method, diff_step=diff_step, ftol=ftol, xtol=xtol, gtol=gtol, **kwargs)
 
-		### maybe change this - look at other func
-		### add global optimisation aswell as local 
+		ssr = np.sum(result.fun**2)
+		##if ssr >= 
+		##	raise ValueError(f"The result provided has a high SSR and may not be optimal. Please pass global_search=True to use differetial evolutional an dpotentially generate a better fit."
+
+		# check result is well positioned
+		if result.status == 1:
+			raise ValueError(f"\nThe initial guess for the rate constant of reaction '{', '.join(self.optimised_reactions)}' is not optimal for this model. Either provide a different initial guess or pass scan=True to generate a more suitable starting point.")
+
 		if not result.success:
-			raise ValueError(f"Optimisation did not converge. Solver message: {result.message}")
+			raise ValueError(f"Optimisation did not converge. Solver message: {result.message}. A global method can be used by passing global_search=True.")
 
 		return result
 
+	# fits arrhenius A and Ea values using scipy differential evolution
+	def _global_search(self, lower_bound, upper_bound):
+		print("\nPerforming global search (differential evolution)")
+
+		def ssr(params):
+			# params = [ln(A1), Ea1, ln(A2), Ea2, ...]
+			try:
+				res = self._arrhenius_residuals(params)
+			except Exception:
+				return 1e30 # solver failure - reject this point
+			if not np.all(np.isfinite(res)):
+				return 1e30
+			return np.sum(res**2)
+
+		initial_guess = self._log_convert(self.initial_guesses) # [ln(A1), Ea1, ln(A2), Ea2, ...]
+
+		result = differential_evolution(ssr, bounds=list(zip(lower_bound, upper_bound)), x0=initial_guess)
+
+		return result.x
+
+	# optimises A and Ea based on experimental data
 	def optimise_arrhenius(self, scan=False, global_search=False, method="trf", diff_step=0.01, ftol=1e-12, xtol=1e-12, gtol=1e-12, **kwargs):
 		optimise_start_time = time.perf_counter() 
+		print(f"\nOptimising arrhenius parameters A and Ea for reactions: {', '.join(self.optimised_reactions)}")
 
-		# optimises A and Ea based on experimental data 
-		result = self.fit_arrhenius(method=method, diff_step=diff_step, scan=scan, global_search=global_search, ftol=ftol, xtol=xtol, gtol=gtol, **kwargs)
+		result = self.fit_arrhenius(scan=scan, global_search=global_search, method=method, diff_step=diff_step, ftol=ftol, xtol=xtol, gtol=gtol, **kwargs)
 
 		fitted_parameters = result.x # format [ln(A1), Ea1, ln(A2), Ea2, ...]
 		lower, upper = self._arrhenius_uncertainty(result)
@@ -240,23 +259,3 @@ class ARRHENIUS_FITTING(FITTING):
 
 		return lg_params
 
-	def _global_search(self, lower_bound, upper_bound, seed=None, maxiter=50, popsize=10):
-		print("\nPerforming global search (differential evolution)")
-
-		def ssr(params):
-			# params = [ln(A1), Ea1, ln(A2), Ea2, ...]
-			try:
-				res = self._arrhenius_residuals(params)
-			except Exception:
-				return 1e30 # solver failure - reject this point
-			if not np.all(np.isfinite(res)):
-				return 1e30
-			return np.sum(res**2)
-
-		result = differential_evolution(ssr, bounds=list(zip(lower_bound, upper_bound)), seed=seed, maxiter=maxiter, popsize=popsize, init="sobol", tol=1e-6, polish=False,)
-
-		print(f"Global search SSR: {result.fun:.4g}")
-		return result.x
-
-# leave maxiter and popsize as default.
-# test difference with least squares after/ not

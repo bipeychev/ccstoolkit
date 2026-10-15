@@ -7,7 +7,6 @@ from scheme import SCHEME
 from simulate import simulate_scheme
 from optimise import optimise_parameters
 
-
 template1 = f"""
 
 [CONDITIONS]
@@ -55,29 +54,24 @@ TEMPERATURE (K) = 373
 PARAMETER TYPE = rate constant
 
 [SPECIES]
-RO2R | 4   | stable
-RO   | 0   | reactive intermediate
-RH   | 8e3 | stable
-ROH  | 0   | stable
-R    | 0   | reactive intermediate
-O2   | 100 | buffered
-RO2  | 0   | reactive intermediate
-RO2H | 0   | stable
-Me2CO | 0 | stable
-Me | 0 |  reactive intermediate
-MeO2 | 0 |  reactive intermediate
-MeO2H | 0 | stable
+Bu2O2 | 1 | stable
+BuH| 8e3 | stable
+BuO2H|0|stable
+ BuOH|0|stable
+ O2| 8 | buffered
+ Bu|0| reactive intermediate
+ BuO|0| reactive intermediate
+ BuO2|0| reactive intermediate
+ c_2BuO |0| reactive intermediate
 
 [REACTIONS]
-i  | 6.8e-7  | RO2R -> 2 RO
-b  | 1.159e9 | RO + RH -> ROH + R
-o  | 1e12    | R + O2 -> RO2
-a  | 7.15e2  | RO2 + RH -> RO2H + R
-dt | 8.55e7  | 2 RO2 -> 2 RO + O2
-t  | 1.27e7  | 2RO2 -> RO2R + O2
-d  | 6.8e3   | RO -> Me2CO + Me
-o2 | 1e12    | Me + O2 -> MeO2
-a2 | 6.38e1  | MeO2 + RH -> MeO2H + R
+1  | 6.8e-7  | Bu2O2 -> 2 BuO 
+2  | 1.159e9 | BuO + BuH -> BuOH + Bu 
+3  | 4e12    | Bu + O2 -> BuO2 
+4  | 7.15e2  | BuO2 + BuH -> BuO2H + Bu    
+5 | 9.82e7  | 2 BuO2 -> c_2BuO + O2 
+6  | 1e18  | c_2BuO -> Bu2O2
+7  | 6.73e18   | c_2BuO -> 2 BuO
 
 [EXPERIMENTAL]
 DATA TYPE =
@@ -91,14 +85,14 @@ sim_inputData = template2
 
 # ----------------- SIMULATE REACTION SCHEME ------------------
 
-#system, results = simulate_scheme(sim_inputData) #,rate_constants) #rate_constants = [1,1,1,1,1,1]
+# system, results = simulate_scheme(sim_inputData) #,rate_constants) #rate_constants = [1,1,1,1,1,1]
 
 #print(system.scheme._stoichiometric_matrix())
 #print(results.raw_data())
 #results.print_info()
 #results.plot_results()
 #results.plot_scheme(filename=None, show=True)
-#results.plot_seperate_results()
+#results.plot_seperate_results(species=["c_2BuO"])
 
 ## info = input (elementary reactions, calculation time, reactor type) + output (stoichiometric matrix, overall reactions,  final concentrations)
 #file_name = "test"
@@ -182,7 +176,7 @@ initk = 1e3
 
 # ---------------------- OPTIMISE PARAMETERS ----------------------
 
-opt_result = optimise_parameters(opt_inputData, global_search=True) #, optimised_reactions=None, initial_guesses=None, scan=False
+opt_result = optimise_parameters(opt_inputData, global_search=False, initial_guesses=[1e4,30000]) #, optimised_reactions=None, initial_guesses=None, scan=False
 
 
 # -------------------------------------------------------------------
